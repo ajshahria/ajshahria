@@ -97,6 +97,9 @@ def fetch_calendar(created_at):
     return days
 
 
+LEVELS = {}  # date -> GitHub's own color level (0-4) from the profile graph
+
+
 def scrape_calendar(created_at):
     """No-token fallback: read the public contribution graph from github.com, one year at a time."""
     days = {}
@@ -106,8 +109,10 @@ def scrape_calendar(created_at):
         request = urllib.request.Request(url, headers={"User-Agent": "profile-stats-generator"})
         with urllib.request.urlopen(request, timeout=60) as resp:
             html = resp.read().decode("utf-8")
-        dates = dict(re.findall(r'data-date="(\d{4}-\d{2}-\d{2})" id="([^"]+)"', html))
-        id_to_date = {cell_id: date for date, cell_id in dates.items()}
+        cells = re.findall(r'data-date="(\d{4}-\d{2}-\d{2})" id="([^"]+)" data-level="(\d)"', html)
+        id_to_date = {cell_id: date for date, cell_id, _ in cells}
+        for date, _, lvl in cells:
+            LEVELS[dt.date.fromisoformat(date)] = int(lvl)
         for cell_id, text in re.findall(r'<tool-tip[^>]*for="([^"]+)"[^>]*>([^<]*)</tool-tip>', html):
             if cell_id not in id_to_date:
                 continue
@@ -441,7 +446,7 @@ def graph_svg(data):
             x, y = ox + col * (cell + gap), oy + row * (cell + gap)
             in_streak = cur and cs <= d <= ce
             cls = "c s" if in_streak else "c"
-            fill = "#a21caf" if in_streak else greens[level(c)]
+            fill = "#a21caf" if in_streak else greens[LEVELS.get(d, level(c))]
             delay = col * 0.025 + row * 0.01
             rects.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="3" fill="{fill}" class="{cls}" '
                          f'style="animation-delay:{delay:.2f}s"><title>{d:%b %d, %Y}: {c} contributions</title></rect>')
