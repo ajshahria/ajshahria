@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="GitHub stats for ajshahria">
+<title>GitHub stats for Abdul Julil Shahria</title>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e1b4b"/><stop offset="0.55" stop-color="#0b1023"/><stop offset="1" stop-color="#123047"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="0.15" cy="0" r="0.7">
+    <stop offset="0" stop-color="#7c3aed" stop-opacity="0.35"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#2dd4bf"/>
+  </linearGradient>
+  <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/>
+  </linearGradient>
+  <linearGradient id="barPeak" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#5eead4"/><stop offset="1" stop-color="#6366f1"/>
+  </linearGradient>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#ffffff" opacity="0.05"/>
+  </pattern>
+</defs>
+<style>
+  text { font-family: 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; fill: #e2e8f0; }
+  .h1 { font-size: 26px; font-weight: 700; }
+  .h2 { font-size: 16px; font-weight: 700; }
+  .sub { font-size: 12px; fill: #94a3b8; }
+  .label { font-size: 13px; fill: #cbd5e1; }
+  .muted { font-size: 13px; fill: #94a3b8; }
+  .small { font-size: 11px; fill: #94a3b8; }
+  .axis { font-size: 10px; fill: #64748b; }
+  .accent { font-size: 12px; font-weight: 600; fill: #5eead4; }
+  .big { font-size: 64px; font-weight: 800; fill: #eef2ff; }
+  .unit { font-size: 20px; fill: #94a3b8; }
+  .ringnum { font-size: 34px; font-weight: 800; }
+  .donutnum { font-size: 20px; font-weight: 700; }
+  .peaklabel { font-size: 10px; font-weight: 700; fill: #5eead4; }
+  .tile { fill: #ffffff; fill-opacity: 0.04; stroke: #ffffff; stroke-opacity: 0.08; }
+  .tile-hl { fill: #ffffff; fill-opacity: 0.05; stroke: #818cf8; stroke-opacity: 0.6; }
+  .grid { stroke: #ffffff; stroke-opacity: 0.06; }
+  .peak { fill: #2dd4bf; fill-opacity: 0.07; stroke: #2dd4bf; stroke-opacity: 0.25; }
+  .bar { transform-box: fill-box; transform-origin: bottom; animation: grow .8s cubic-bezier(.2,.8,.2,1) both; }
+  .seg { animation: fade .7s ease-out both; }
+  .ringarc { animation: draw 1.4s cubic-bezier(.2,.8,.2,1) both; }
+  .fadein { animation: fade .8s ease-out both; }
+  @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes draw { from { stroke-dashoffset: 326.73; } }
+</style>
+<rect width="1000" height="700" rx="24" fill="url(#bg)"/>
+<rect width="1000" height="700" rx="24" fill="url(#glow)"/>
+<rect width="1000" height="700" rx="24" fill="url(#dots)"/>
+<rect x="0.5" y="0.5" width="999" height="699" rx="24" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+
+<text x="40" y="56" class="h1">GitHub stats</text>
+<text x="40" y="78" class="sub">Abdul Julil Shahria · Computer Science Student</text>
+
+<g class="fadein">
+  <rect x="40" y="100" width="250" height="150" rx="16" class="tile"/>
+  <text x="64" y="134" class="muted">Total contributions</text>
+  <text x="64" y="206" class="big">451</text>
+  <text x="64" y="232" class="accent">Jan 15, 2024 to present</text>
+
+  <rect x="306" y="100" width="388" height="150" rx="16" class="tile-hl"/>
+  <circle cx="402" cy="175" r="52" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="10"/>
+  <circle cx="402" cy="175" r="52" fill="none" stroke="url(#ring)" stroke-width="10" stroke-linecap="round"
+          stroke-dasharray="163.36 326.73" transform="rotate(-90 402 175)" class="ringarc"/>
+  <text x="402" y="185" class="ringnum" text-anchor="middle">3</text>
+  <text x="402" y="203" class="small" text-anchor="middle">days</text>
+  <text x="482" y="161" class="h2">Current streak</text>
+  <text x="482" y="183" class="accent">Nov 19 to Nov 21</text>
+  <text x="482" y="207" class="small">3 days to beat your record</text>
+
+  <rect x="710" y="100" width="250" height="150" rx="16" class="tile"/>
+  <text x="734" y="134" class="muted">Longest streak</text>
+  <text x="734" y="206" class="big">6<tspan class="unit" dx="10">days</tspan></text>
+  <text x="734" y="232" class="accent">Aug 9 to Aug 14</text>
+</g>
+
+<rect x="40" y="266" width="920" height="180" rx="16" class="tile"/>
+<text x="64" y="300" class="h2">Commits by hour</text>
+<text x="936" y="300" class="small" text-anchor="end">UTC+6</text>
+<line x1="100" x2="936" y1="410.0" y2="410.0" class="grid"/><text x="88" y="414.0" class="axis" text-anchor="end">0</text>
+<line x1="100" x2="936" y1="384.0" y2="384.0" class="grid"/><text x="88" y="388.0" class="axis" text-anchor="end">20</text>
+<line x1="100" x2="936" y1="358.0" y2="358.0" class="grid"/><text x="88" y="362.0" class="axis" text-anchor="end">40</text>
+<line x1="100" x2="936" y1="332.0" y2="332.0" class="grid"/><text x="88" y="336.0" class="axis" text-anchor="end">60</text>
+<rect x="554.8" y="312" width="100.5" height="100" rx="8" class="peak"/><text x="605.1" y="326" class="peaklabel" text-anchor="middle">Peak hours</text>
+<rect x="106.6" y="403.5" width="21.6" height="6.5" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.000s"><title>00:00 - 5 commits</title></rect>
+<text x="117.4" y="430" class="axis" text-anchor="middle">00</text>
+<rect x="141.5" y="408.0" width="21.6" height="2.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.025s"><title>01:00 - 1 commits</title></rect>
+<rect x="176.3" y="385.3" width="21.6" height="24.7" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.050s"><title>02:00 - 19 commits</title></rect>
+<rect x="211.1" y="410.0" width="21.6" height="0.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.075s"><title>03:00 - 0 commits</title></rect>
+<text x="221.9" y="430" class="axis" text-anchor="middle">03</text>
+<rect x="246.0" y="408.0" width="21.6" height="2.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.100s"><title>04:00 - 1 commits</title></rect>
+<rect x="280.8" y="407.4" width="21.6" height="2.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.125s"><title>05:00 - 2 commits</title></rect>
+<rect x="315.6" y="407.4" width="21.6" height="2.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.150s"><title>06:00 - 2 commits</title></rect>
+<text x="326.4" y="430" class="axis" text-anchor="middle">06</text>
+<rect x="350.5" y="408.0" width="21.6" height="2.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.175s"><title>07:00 - 1 commits</title></rect>
+<rect x="385.3" y="407.4" width="21.6" height="2.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.200s"><title>08:00 - 2 commits</title></rect>
+<rect x="420.1" y="404.8" width="21.6" height="5.2" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.225s"><title>09:00 - 4 commits</title></rect>
+<text x="430.9" y="430" class="axis" text-anchor="middle">09</text>
+<rect x="455.0" y="402.2" width="21.6" height="7.8" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.250s"><title>10:00 - 6 commits</title></rect>
+<rect x="489.8" y="390.5" width="21.6" height="19.5" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.275s"><title>11:00 - 15 commits</title></rect>
+<rect x="524.6" y="398.3" width="21.6" height="11.7" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.300s"><title>12:00 - 9 commits</title></rect>
+<text x="535.4" y="430" class="axis" text-anchor="middle">12</text>
+<rect x="559.5" y="346.3" width="21.6" height="63.7" rx="4" fill="url(#barPeak)" class="bar" style="animation-delay:0.325s"><title>13:00 - 49 commits</title></rect>
+<rect x="594.3" y="348.9" width="21.6" height="61.1" rx="4" fill="url(#barPeak)" class="bar" style="animation-delay:0.350s"><title>14:00 - 47 commits</title></rect>
+<rect x="629.1" y="335.9" width="21.6" height="74.1" rx="4" fill="url(#barPeak)" class="bar" style="animation-delay:0.375s"><title>15:00 - 57 commits</title></rect>
+<text x="639.9" y="430" class="axis" text-anchor="middle">15</text>
+<rect x="664.0" y="364.5" width="21.6" height="45.5" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.400s"><title>16:00 - 35 commits</title></rect>
+<rect x="698.8" y="391.8" width="21.6" height="18.2" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.425s"><title>17:00 - 14 commits</title></rect>
+<rect x="733.6" y="384.0" width="21.6" height="26.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.450s"><title>18:00 - 20 commits</title></rect>
+<text x="744.4" y="430" class="axis" text-anchor="middle">18</text>
+<rect x="768.5" y="387.9" width="21.6" height="22.1" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.475s"><title>19:00 - 17 commits</title></rect>
+<rect x="803.3" y="393.1" width="21.6" height="16.9" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.500s"><title>20:00 - 13 commits</title></rect>
+<rect x="838.1" y="341.1" width="21.6" height="68.9" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.525s"><title>21:00 - 53 commits</title></rect>
+<text x="848.9" y="430" class="axis" text-anchor="middle">21</text>
+<rect x="873.0" y="395.7" width="21.6" height="14.3" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.550s"><title>22:00 - 11 commits</title></rect>
+<rect x="907.8" y="407.4" width="21.6" height="2.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.575s"><title>23:00 - 2 commits</title></rect>
+<text x="918.6" y="430" class="axis" text-anchor="middle">23</text>
+
+<rect x="40" y="462" width="452" height="200" rx="16" class="tile"/>
+<text x="64" y="496" class="h2">Top languages by repository</text>
+<circle cx="70" cy="528" r="5" fill="#facc15"/><text x="84" y="532" class="label">JavaScript</text><text x="290" y="532" class="muted" text-anchor="end">42%</text>
+<circle cx="70" cy="554" r="5" fill="#ef4444"/><text x="84" y="558" class="label">HTML</text><text x="290" y="558" class="muted" text-anchor="end">33%</text>
+<circle cx="70" cy="580" r="5" fill="#f59e0b"/><text x="84" y="584" class="label">Java</text><text x="290" y="584" class="muted" text-anchor="end">8%</text>
+<circle cx="70" cy="606" r="5" fill="#ec4899"/><text x="84" y="610" class="label">C++</text><text x="290" y="610" class="muted" text-anchor="end">4%</text>
+<circle cx="70" cy="632" r="5" fill="#94a3b8"/><text x="84" y="636" class="label">C</text><text x="290" y="636" class="muted" text-anchor="end">4%</text>
+<circle cx="376" cy="574.0" r="58" fill="none" stroke="#facc15" stroke-width="24" stroke-dasharray="148.84 364.42" stroke-dashoffset="-0.00" transform="rotate(-90 376 574.0)" class="seg" style="animation-delay:0.30s"/>
+<circle cx="376" cy="574.0" r="58" fill="none" stroke="#ef4444" stroke-width="24" stroke-dasharray="118.47 364.42" stroke-dashoffset="-151.84" transform="rotate(-90 376 574.0)" class="seg" style="animation-delay:0.42s"/>
+<circle cx="376" cy="574.0" r="58" fill="none" stroke="#f59e0b" stroke-width="24" stroke-dasharray="27.37 364.42" stroke-dashoffset="-273.32" transform="rotate(-90 376 574.0)" class="seg" style="animation-delay:0.54s"/>
+<circle cx="376" cy="574.0" r="58" fill="none" stroke="#ec4899" stroke-width="24" stroke-dasharray="12.18 364.42" stroke-dashoffset="-303.69" transform="rotate(-90 376 574.0)" class="seg" style="animation-delay:0.66s"/>
+<circle cx="376" cy="574.0" r="58" fill="none" stroke="#94a3b8" stroke-width="24" stroke-dasharray="12.18 364.42" stroke-dashoffset="-318.87" transform="rotate(-90 376 574.0)" class="seg" style="animation-delay:0.78s"/>
+<circle cx="376" cy="574.0" r="58" fill="none" stroke="#475569" stroke-width="24" stroke-dasharray="27.37 364.42" stroke-dashoffset="-334.06" transform="rotate(-90 376 574.0)" class="seg" style="animation-delay:0.90s"/>
+<text x="376" y="580.0" class="donutnum" text-anchor="middle">42%</text><text x="376" y="598.0" class="small" text-anchor="middle">JavaScript</text>
+<rect x="508" y="462" width="452" height="200" rx="16" class="tile"/>
+<text x="532" y="496" class="h2">Top languages by commit</text>
+<circle cx="538" cy="528" r="5" fill="#facc15"/><text x="552" y="532" class="label">JavaScript</text><text x="758" y="532" class="muted" text-anchor="end">36%</text>
+<circle cx="538" cy="554" r="5" fill="#ec4899"/><text x="552" y="558" class="label">C++</text><text x="758" y="558" class="muted" text-anchor="end">24%</text>
+<circle cx="538" cy="580" r="5" fill="#2dd4bf"/><text x="552" y="584" class="label">TypeScript</text><text x="758" y="584" class="muted" text-anchor="end">23%</text>
+<circle cx="538" cy="606" r="5" fill="#ef4444"/><text x="552" y="610" class="label">HTML</text><text x="758" y="610" class="muted" text-anchor="end">15%</text>
+<circle cx="538" cy="632" r="5" fill="#f59e0b"/><text x="552" y="636" class="label">Java</text><text x="758" y="636" class="muted" text-anchor="end">1%</text>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#facc15" stroke-width="24" stroke-dasharray="127.57 364.42" stroke-dashoffset="-0.00" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.30s"/>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#ec4899" stroke-width="24" stroke-dasharray="83.72 364.42" stroke-dashoffset="-130.57" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.42s"/>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#2dd4bf" stroke-width="24" stroke-dasharray="81.77 364.42" stroke-dashoffset="-217.29" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.54s"/>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#ef4444" stroke-width="24" stroke-dasharray="52.54 364.42" stroke-dashoffset="-302.06" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.66s"/>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#f59e0b" stroke-width="24" stroke-dasharray="0.50 364.42" stroke-dashoffset="-357.60" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.78s"/>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#475569" stroke-width="24" stroke-dasharray="0.90 364.42" stroke-dashoffset="-360.53" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.90s"/>
+<text x="844" y="580.0" class="donutnum" text-anchor="middle">36%</text><text x="844" y="598.0" class="small" text-anchor="middle">JavaScript</text>
+</svg>
