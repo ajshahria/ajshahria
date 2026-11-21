@@ -41,7 +41,7 @@
 ## Contributions
 
 <p align="center">
-  <img src="./assets/contribution-graph.svg" alt="Contribution graph" width="100%" />
+  <img src="./assets/github-snake.svg" alt="Snake eating my contribution graph" width="100%" />
 </p>
 
 ## Contact
