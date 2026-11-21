@@ -426,7 +426,7 @@ def graph_svg(data):
         q = [counts[int(len(counts) * f)] for f in (0.25, 0.5, 0.75)]
         return 1 + sum(c > t for t in q)
 
-    greens = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"]
+    greens = ["#ebedf0", "#f9a8d4", "#f472b6", "#db2777", "#9d174d"]  # pink scale
     cell, gap, ox, oy = 14, 4, 40, 40
     cols = 53
     W = ox * 2 + cols * (cell + gap) - gap
@@ -446,7 +446,7 @@ def graph_svg(data):
             x, y = ox + col * (cell + gap), oy + row * (cell + gap)
             in_streak = cur and cs <= d <= ce
             cls = "c s" if in_streak else "c"
-            fill = "#a21caf" if in_streak else greens[LEVELS.get(d, level(c))]
+            fill = "#7c3aed" if in_streak else greens[LEVELS.get(d, level(c))]
             delay = col * 0.025 + row * 0.01
             rects.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="3" fill="{fill}" class="{cls}" '
                          f'style="animation-delay:{delay:.2f}s"><title>{d:%b %d, %Y}: {c} contributions</title></rect>')
@@ -465,7 +465,7 @@ def graph_svg(data):
   .c {{ transform-box: fill-box; transform-origin: center; animation: pop .5s cubic-bezier(.2,.8,.2,1) both; }}
   .s {{ animation: pop .5s cubic-bezier(.2,.8,.2,1) both, pulse 2.4s ease-in-out 1.6s infinite; }}
   @keyframes pop {{ from {{ transform: scale(0); opacity: 0; }} to {{ transform: scale(1); opacity: 1; }} }}
-  @keyframes pulse {{ 0%,100% {{ fill: #a21caf; }} 50% {{ fill: #e879f9; }} }}
+  @keyframes pulse {{ 0%,100% {{ fill: #7c3aed; }} 50% {{ fill: #a78bfa; }} }}
 </style>
 <rect width="{W}" height="{H}" rx="14" fill="#0d1117"/>
 {"".join(months)}
