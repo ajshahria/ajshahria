@@ -58,23 +58,23 @@
 <g class="fadein">
   <rect x="40" y="100" width="250" height="150" rx="16" class="tile"/>
   <text x="64" y="134" class="muted">Total contributions</text>
-  <text x="64" y="206" class="big">487</text>
+  <text x="64" y="206" class="big">496</text>
   <text x="64" y="232" class="accent">Jan 15, 2024 to present</text>
 
   <rect x="306" y="100" width="388" height="150" rx="16" class="tile-hl"/>
   <circle cx="402" cy="175" r="52" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="10"/>
   <circle cx="402" cy="175" r="52" fill="none" stroke="url(#ring)" stroke-width="10" stroke-linecap="round"
           stroke-dasharray="326.73 326.73" transform="rotate(-90 402 175)" class="ringarc"/>
-  <text x="402" y="185" class="ringnum" text-anchor="middle">8</text>
+  <text x="402" y="185" class="ringnum" text-anchor="middle">9</text>
   <text x="402" y="203" class="small" text-anchor="middle">days</text>
   <text x="482" y="161" class="h2">Current streak</text>
-  <text x="482" y="183" class="accent">Nov 19 to Nov 26</text>
+  <text x="482" y="183" class="accent">Nov 19 to Nov 27</text>
   <text x="482" y="207" class="small">Matches the longest streak</text>
 
   <rect x="710" y="100" width="250" height="150" rx="16" class="tile"/>
   <text x="734" y="134" class="muted">Longest streak</text>
-  <text x="734" y="206" class="big">8<tspan class="unit" dx="10">days</tspan></text>
-  <text x="734" y="232" class="accent">Nov 19 to Nov 26</text>
+  <text x="734" y="206" class="big">9<tspan class="unit" dx="10">days</tspan></text>
+  <text x="734" y="232" class="accent">Nov 19 to Nov 27</text>
 </g>
 
 <rect x="40" y="266" width="920" height="180" rx="16" class="tile"/>
@@ -97,12 +97,12 @@
 <rect x="385.3" y="410.0" width="21.6" height="0.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.200s"><title>08:00 - 0 commits</title></rect>
 <rect x="420.1" y="394.4" width="21.6" height="15.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.225s"><title>09:00 - 1 commits</title></rect>
 <text x="430.9" y="430" class="axis" text-anchor="middle">09</text>
-<rect x="455.0" y="394.4" width="21.6" height="15.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.250s"><title>10:00 - 1 commits</title></rect>
+<rect x="455.0" y="378.8" width="21.6" height="31.2" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.250s"><title>10:00 - 2 commits</title></rect>
 <rect x="489.8" y="394.4" width="21.6" height="15.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.275s"><title>11:00 - 1 commits</title></rect>
 <rect x="524.6" y="378.8" width="21.6" height="31.2" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.300s"><title>12:00 - 2 commits</title></rect>
 <text x="535.4" y="430" class="axis" text-anchor="middle">12</text>
 <rect x="559.5" y="363.2" width="21.6" height="46.8" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.325s"><title>13:00 - 3 commits</title></rect>
-<rect x="594.3" y="394.4" width="21.6" height="15.6" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.350s"><title>14:00 - 1 commits</title></rect>
+<rect x="594.3" y="378.8" width="21.6" height="31.2" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.350s"><title>14:00 - 2 commits</title></rect>
 <rect x="629.1" y="378.8" width="21.6" height="31.2" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.375s"><title>15:00 - 2 commits</title></rect>
 <text x="639.9" y="430" class="axis" text-anchor="middle">15</text>
 <rect x="664.0" y="410.0" width="21.6" height="0.0" rx="4" fill="url(#bar)" class="bar" style="animation-delay:0.400s"><title>16:00 - 0 commits</title></rect>
@@ -133,9 +133,9 @@
 <text x="376" y="580.0" class="donutnum" text-anchor="middle">40%</text><text x="376" y="598.0" class="small" text-anchor="middle">JavaScript</text>
 <rect x="508" y="462" width="452" height="200" rx="16" class="tile"/>
 <text x="532" y="496" class="h2">Top languages by commit</text>
-<circle cx="538" cy="528" r="5" fill="#ec4899"/><text x="552" y="532" class="label">C++</text><text x="758" y="532" class="muted" text-anchor="end">79%</text>
-<circle cx="538" cy="554" r="5" fill="#2dd4bf"/><text x="552" y="558" class="label">TypeScript</text><text x="758" y="558" class="muted" text-anchor="end">21%</text>
-<circle cx="844" cy="574.0" r="58" fill="none" stroke="#ec4899" stroke-width="24" stroke-dasharray="283.33 364.42" stroke-dashoffset="-0.00" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.30s"/>
-<circle cx="844" cy="574.0" r="58" fill="none" stroke="#2dd4bf" stroke-width="24" stroke-dasharray="75.09 364.42" stroke-dashoffset="-286.33" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.42s"/>
-<text x="844" y="580.0" class="donutnum" text-anchor="middle">79%</text><text x="844" y="598.0" class="small" text-anchor="middle">C++</text>
+<circle cx="538" cy="528" r="5" fill="#ec4899"/><text x="552" y="532" class="label">C++</text><text x="758" y="532" class="muted" text-anchor="end">80%</text>
+<circle cx="538" cy="554" r="5" fill="#2dd4bf"/><text x="552" y="558" class="label">TypeScript</text><text x="758" y="558" class="muted" text-anchor="end">20%</text>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#ec4899" stroke-width="24" stroke-dasharray="288.54 364.42" stroke-dashoffset="-0.00" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.30s"/>
+<circle cx="844" cy="574.0" r="58" fill="none" stroke="#2dd4bf" stroke-width="24" stroke-dasharray="69.88 364.42" stroke-dashoffset="-291.54" transform="rotate(-90 844 574.0)" class="seg" style="animation-delay:0.42s"/>
+<text x="844" y="580.0" class="donutnum" text-anchor="middle">80%</text><text x="844" y="598.0" class="small" text-anchor="middle">C++</text>
 </svg>
