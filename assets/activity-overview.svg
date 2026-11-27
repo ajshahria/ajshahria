@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="340" viewBox="0 0 1000 340" role="img" aria-label="Activity overview">
+<title>Activity overview for ajshahria</title>
+<defs>
+  <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e1b4b"/><stop offset="0.55" stop-color="#0b1023"/><stop offset="1" stop-color="#123047"/>
+  </linearGradient>
+  <radialGradient id="glow2" cx="0.85" cy="0.1" r="0.6">
+    <stop offset="0" stop-color="#7c3aed" stop-opacity="0.3"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="repoBar" x1="0" x2="1">
+    <stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#5eead4"/>
+  </linearGradient>
+</defs>
+<style>
+  text { font-family: 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; fill: #e2e8f0; }
+  .h1 { font-size: 22px; font-weight: 700; }
+  .sub { font-size: 12px; fill: #94a3b8; }
+  .label { font-size: 12px; font-weight: 600; fill: #5eead4; letter-spacing: .04em; }
+  .repo { font-size: 15px; font-weight: 600; fill: #a5b4fc; }
+  .owner { fill: #94a3b8; font-weight: 400; }
+  .small { font-size: 12px; fill: #94a3b8; }
+  .muted { font-size: 13px; fill: #94a3b8; }
+  .axislabel { font-size: 13px; fill: #94a3b8; }
+  .pct { font-size: 15px; font-weight: 700; fill: #e2e8f0; }
+  .axis { stroke: #a78bfa; stroke-opacity: .55; stroke-width: 2; }
+  .shape { fill: #a78bfa; fill-opacity: .28; stroke: #c4b5fd; stroke-width: 3; stroke-linejoin: round;
+           transform-origin: 760px 182px; animation: bloom 1s cubic-bezier(.2,.8,.2,1) .2s both; }
+  .dot { fill: #0b1023; stroke: #c4b5fd; stroke-width: 2.5; animation: fade .6s ease-out 1s both; }
+  .fadein { animation: fade .7s ease-out both; }
+  .grow { transform-box: fill-box; transform-origin: left; animation: growx .9s cubic-bezier(.2,.8,.2,1) .3s both; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes bloom { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes growx { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+</style>
+<rect width="1000" height="340" rx="24" fill="url(#bg2)"/>
+<rect width="1000" height="340" rx="24" fill="url(#glow2)"/>
+<rect x="0.5" y="0.5" width="999" height="339" rx="24" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+
+<text x="40" y="56" class="h1">Activity overview</text>
+<text x="40" y="78" class="sub">Last 12 months · 456 contributions</text>
+<text x="64" y="112" class="label">CONTRIBUTED TO</text>
+<g class="fadein" style="animation-delay:0.15s"><rect x="64" y="127" width="12" height="15" rx="2" fill="none" stroke="#94a3b8" stroke-width="1.5"/><line x1="67" x2="73" y1="134" y2="134" stroke="#94a3b8" stroke-width="1.5"/><text x="88" y="140" class="repo"><tspan class="owner">ajshahria/</tspan>Quick-Dine-</text><rect x="88" y="149" width="190.0" height="4" rx="2" fill="url(#repoBar)" class="grow"/><text x="472" y="140" class="small" text-anchor="end">24 contributions</text></g><g class="fadein" style="animation-delay:0.25s"><rect x="64" y="167" width="12" height="15" rx="2" fill="none" stroke="#94a3b8" stroke-width="1.5"/><line x1="67" x2="73" y1="174" y2="174" stroke="#94a3b8" stroke-width="1.5"/><text x="88" y="180" class="repo"><tspan class="owner">ajshahria/</tspan>Compiler_Construction</text><rect x="88" y="189" width="190.0" height="4" rx="2" fill="url(#repoBar)" class="grow"/><text x="472" y="180" class="small" text-anchor="end">24 contributions</text></g><g class="fadein" style="animation-delay:0.35s"><rect x="64" y="207" width="12" height="15" rx="2" fill="none" stroke="#94a3b8" stroke-width="1.5"/><line x1="67" x2="73" y1="214" y2="214" stroke="#94a3b8" stroke-width="1.5"/><text x="88" y="220" class="repo"><tspan class="owner">ajshahria/</tspan>TilesGallery</text><rect x="88" y="229" width="166.2" height="4" rx="2" fill="url(#repoBar)" class="grow"/><text x="472" y="220" class="small" text-anchor="end">21 contributions</text></g><g class="fadein" style="animation-delay:0.45s"><rect x="64" y="247" width="12" height="15" rx="2" fill="none" stroke="#94a3b8" stroke-width="1.5"/><line x1="67" x2="73" y1="254" y2="254" stroke="#94a3b8" stroke-width="1.5"/><text x="88" y="260" class="repo"><tspan class="owner">ajshahria/</tspan>MediQueue-Server</text><rect x="88" y="269" width="142.5" height="4" rx="2" fill="url(#repoBar)" class="grow"/><text x="472" y="260" class="small" text-anchor="end">18 contributions</text></g><text x="64" y="300" class="small">and 12 other repositories</text>
+
+<line x1="520" x2="520" y1="40" y2="300" stroke="#ffffff" stroke-opacity="0.1"/>
+
+<line x1="650" x2="870" y1="182" y2="182" class="axis"/>
+<line x1="760" x2="760" y1="72" y2="292" class="axis"/>
+<polygon points="661.1,182.0 760.0,177.6 764.4,182.0 760.0,193.1" class="shape"/>
+<circle cx="661.1" cy="182.0" r="4.5" class="dot"/><circle cx="760.0" cy="193.1" r="4.5" class="dot"/>
+<text x="760" y="34" class="axislabel" text-anchor="middle"><tspan x="760" dy="16">Code review</tspan></text>
+<text x="760" y="298" class="axislabel" text-anchor="middle"><tspan x="760" dy="0" class="pct">10%</tspan><tspan x="760" dy="16">Pull requests</tspan></text>
+<text x="636" y="170" class="axislabel" text-anchor="end"><tspan x="636" dy="0" class="pct">90%</tspan><tspan x="636" dy="16">Commits</tspan></text>
+<text x="884" y="170" class="axislabel" text-anchor="start"><tspan x="884" dy="16">Issues</tspan></text>
+</svg>

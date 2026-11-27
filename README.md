@@ -38,6 +38,12 @@
   <img src="./assets/github-stats.svg" alt="GitHub stats" width="100%" />
 </p>
 
+## Activity overview
+
+<p align="center">
+  <img src="./assets/activity-overview.svg" alt="Activity overview" width="100%" />
+</p>
+
 ## Contributions
 
 <p align="center">

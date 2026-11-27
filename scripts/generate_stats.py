@@ -21,6 +21,7 @@ import random
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from collections import Counter
 from xml.sax.saxutils import escape
@@ -168,6 +169,76 @@ def collect_live():
         "hours": hours,
         "repo_langs": repo_langs,
         "commit_langs": commit_langs,
+        "activity": fetch_activity(),
+    }
+
+
+ACTIVITY_QUERY = """
+query($login: String!, $from: DateTime!, $to: DateTime!) {
+  user(login: $login) {
+    contributionsCollection(from: $from, to: $to) {
+      totalCommitContributions
+      totalIssueContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
+      commitContributionsByRepository(maxRepositories: 25) {
+        repository { nameWithOwner } contributions { totalCount }
+      }
+      issueContributionsByRepository(maxRepositories: 25) {
+        repository { nameWithOwner } contributions { totalCount }
+      }
+      pullRequestContributionsByRepository(maxRepositories: 25) {
+        repository { nameWithOwner } contributions { totalCount }
+      }
+      pullRequestReviewContributionsByRepository(maxRepositories: 25) {
+        repository { nameWithOwner } contributions { totalCount }
+      }
+    }
+  }
+}"""
+
+
+def fetch_activity():
+    """Last-12-months split between commits, issues, pull requests and reviews, like GitHub's
+    "Activity overview", plus the repositories contributed to."""
+    now = dt.datetime.now(dt.timezone.utc)
+    since = now - dt.timedelta(days=365)
+    if TOKEN:
+        try:
+            c = graphql(ACTIVITY_QUERY, login=USER, **{"from": since.isoformat(), "to": now.isoformat()})
+            c = c["user"]["contributionsCollection"]
+            repos = Counter()
+            for key in ("commit", "issue", "pullRequest", "pullRequestReview"):
+                for item in c[f"{key}ContributionsByRepository"]:
+                    repos[item["repository"]["nameWithOwner"]] += item["contributions"]["totalCount"]
+            return {
+                "commits": c["totalCommitContributions"],
+                "issues": c["totalIssueContributions"],
+                "prs": c["totalPullRequestContributions"],
+                "reviews": c["totalPullRequestReviewContributions"],
+                "repos": repos,
+            }
+        except Exception as err:  # fall back to the search API below
+            print(f"GraphQL activity query failed ({err}); using search API", file=sys.stderr)
+
+    day = since.date().isoformat()
+    search = "https://api.github.com/search/"
+    repos = Counter()
+
+    def total(kind, query):
+        data = api(f"{search}{kind}?q={urllib.parse.quote(query)}&per_page=100")
+        for item in data.get("items", []):
+            name = (item.get("repository") or {}).get("full_name") or item.get("repository_url", "").split("/repos/")[-1]
+            if name:
+                repos[name] += 1
+        return data.get("total_count", 0)
+
+    return {
+        "commits": total("commits", f"author:{USER} committer-date:>={day}"),
+        "issues": total("issues", f"author:{USER} type:issue created:>={day}"),
+        "prs": total("issues", f"author:{USER} type:pr created:>={day}"),
+        "reviews": total("issues", f"reviewed-by:{USER} -author:{USER} type:pr updated:>={day}"),
+        "repos": repos,
     }
 
 
@@ -187,6 +258,8 @@ def collect_demo():
         "hours": [rng.randint(0, 30) for _ in range(24)],
         "repo_langs": Counter({"JavaScript": 11, "HTML": 9, "Java": 3, "C++": 1, "TypeScript": 1, "Python": 1, "C": 1}),
         "commit_langs": Counter({"JavaScript": 420, "HTML": 160, "TypeScript": 90, "C++": 40, "Java": 35}),
+        "activity": {"commits": 390, "issues": 6, "prs": 22, "reviews": 4,
+                     "repos": Counter({f"{USER}/Quick-Dine-": 120, f"{USER}/SkillSwap": 80, "siam1251/siam1251.github.io": 12})},
     }
 
 
@@ -476,9 +549,116 @@ def graph_svg(data):
 '''
 
 
+# ------------------------------------------------------------ activity overview
+def activity_svg(act):
+    W, H = 1000, 340
+    parts_total = act["commits"] + act["issues"] + act["prs"] + act["reviews"]
+
+    def pct(n):
+        return n / parts_total if parts_total else 0
+
+    p = {k: pct(act[k]) for k in ("commits", "issues", "prs", "reviews")}
+
+    # Left: repositories contributed to
+    rows = []
+    top = act["repos"].most_common(4)
+    peak = top[0][1] if top else 1
+    for i, (name, count) in enumerate(top):
+        y = 140 + i * 40
+        owner, _, repo = name.partition("/")
+        bar = 190 * count / peak
+        rows.append(
+            f'<g class="fadein" style="animation-delay:{0.15 + i * 0.1:.2f}s">'
+            f'<rect x="64" y="{y - 13}" width="12" height="15" rx="2" fill="none" stroke="#94a3b8" stroke-width="1.5"/>'
+            f'<line x1="67" x2="73" y1="{y - 6}" y2="{y - 6}" stroke="#94a3b8" stroke-width="1.5"/>'
+            f'<text x="88" y="{y}" class="repo"><tspan class="owner">{escape(owner)}/</tspan>{escape(repo)}</text>'
+            f'<rect x="88" y="{y + 9}" width="{bar:.1f}" height="4" rx="2" fill="url(#repoBar)" class="grow"/>'
+            f'<text x="472" y="{y}" class="small" text-anchor="end">{count} contributions</text></g>')
+    others = len(act["repos"]) - len(top)
+    if others > 0:
+        rows.append(f'<text x="64" y="{140 + len(top) * 40}" class="small">and {others} other repositor{"y" if others == 1 else "ies"}</text>')
+    if not top:
+        rows.append('<text x="64" y="140" class="muted">No public contributions in the last year</text>')
+
+    # Right: GitHub-style axis chart
+    cx, cy, L = 760, 182, 110
+    pts = {
+        "commits": (cx - max(p["commits"], 0.04) * L, cy),
+        "issues": (cx + max(p["issues"], 0.04) * L, cy),
+        "reviews": (cx, cy - max(p["reviews"], 0.04) * L),
+        "prs": (cx, cy + max(p["prs"], 0.04) * L),
+    }
+    poly = " ".join(f"{x:.1f},{y:.1f}" for x, y in (pts["commits"], pts["reviews"], pts["issues"], pts["prs"]))
+    dots = "".join(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.5" class="dot"/>'
+                   for k, (x, y) in pts.items() if p[k] > 0)
+
+    def label(key, text, x, y, anchor):
+        share = f'<tspan x="{x}" dy="0" class="pct">{p[key] * 100:.0f}%</tspan><tspan x="{x}" dy="16">{text}</tspan>' \
+            if p[key] > 0 else f'<tspan x="{x}" dy="16">{text}</tspan>'
+        return f'<text x="{x}" y="{y}" class="axislabel" text-anchor="{anchor}">{share}</text>'
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="Activity overview">
+<title>Activity overview for {escape(USER)}</title>
+<defs>
+  <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e1b4b"/><stop offset="0.55" stop-color="#0b1023"/><stop offset="1" stop-color="#123047"/>
+  </linearGradient>
+  <radialGradient id="glow2" cx="0.85" cy="0.1" r="0.6">
+    <stop offset="0" stop-color="#7c3aed" stop-opacity="0.3"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="repoBar" x1="0" x2="1">
+    <stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#5eead4"/>
+  </linearGradient>
+</defs>
+<style>
+  text {{ font-family: {FONT}; fill: #e2e8f0; }}
+  .h1 {{ font-size: 22px; font-weight: 700; }}
+  .sub {{ font-size: 12px; fill: #94a3b8; }}
+  .label {{ font-size: 12px; font-weight: 600; fill: #5eead4; letter-spacing: .04em; }}
+  .repo {{ font-size: 15px; font-weight: 600; fill: #a5b4fc; }}
+  .owner {{ fill: #94a3b8; font-weight: 400; }}
+  .small {{ font-size: 12px; fill: #94a3b8; }}
+  .muted {{ font-size: 13px; fill: #94a3b8; }}
+  .axislabel {{ font-size: 13px; fill: #94a3b8; }}
+  .pct {{ font-size: 15px; font-weight: 700; fill: #e2e8f0; }}
+  .axis {{ stroke: #a78bfa; stroke-opacity: .55; stroke-width: 2; }}
+  .shape {{ fill: #a78bfa; fill-opacity: .28; stroke: #c4b5fd; stroke-width: 3; stroke-linejoin: round;
+           transform-origin: {cx}px {cy}px; animation: bloom 1s cubic-bezier(.2,.8,.2,1) .2s both; }}
+  .dot {{ fill: #0b1023; stroke: #c4b5fd; stroke-width: 2.5; animation: fade .6s ease-out 1s both; }}
+  .fadein {{ animation: fade .7s ease-out both; }}
+  .grow {{ transform-box: fill-box; transform-origin: left; animation: growx .9s cubic-bezier(.2,.8,.2,1) .3s both; }}
+  @keyframes fade {{ from {{ opacity: 0; }} to {{ opacity: 1; }} }}
+  @keyframes bloom {{ from {{ transform: scale(0); opacity: 0; }} to {{ transform: scale(1); opacity: 1; }} }}
+  @keyframes growx {{ from {{ transform: scaleX(0); }} to {{ transform: scaleX(1); }} }}
+</style>
+<rect width="{W}" height="{H}" rx="24" fill="url(#bg2)"/>
+<rect width="{W}" height="{H}" rx="24" fill="url(#glow2)"/>
+<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="24" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+
+<text x="40" y="56" class="h1">Activity overview</text>
+<text x="40" y="78" class="sub">Last 12 months · {parts_total:,} contributions</text>
+<text x="64" y="112" class="label">CONTRIBUTED TO</text>
+{"".join(rows)}
+
+<line x1="520" x2="520" y1="40" y2="{H - 40}" stroke="#ffffff" stroke-opacity="0.1"/>
+
+<line x1="{cx - L}" x2="{cx + L}" y1="{cy}" y2="{cy}" class="axis"/>
+<line x1="{cx}" x2="{cx}" y1="{cy - L}" y2="{cy + L}" class="axis"/>
+<polygon points="{poly}" class="shape"/>
+{dots}
+{label("reviews", "Code review", cx, cy - L - 38, "middle")}
+{label("prs", "Pull requests", cx, cy + L + 6, "middle")}
+{label("commits", "Commits", cx - L - 14, cy - 12, "end")}
+{label("issues", "Issues", cx + L + 14, cy - 12, "start")}
+</svg>
+'''
+
+
 def main():
     data = collect_demo() if "--demo" in sys.argv else collect_live()
     os.makedirs(OUT_DIR, exist_ok=True)
+    with open(os.path.join(OUT_DIR, "activity-overview.svg"), "w", encoding="utf-8") as f:
+        f.write(activity_svg(data["activity"]))
     with open(os.path.join(OUT_DIR, "github-stats.svg"), "w", encoding="utf-8") as f:
         f.write(stats_svg(data))
     with open(os.path.join(OUT_DIR, "contribution-graph.svg"), "w", encoding="utf-8") as f:
