@@ -19,7 +19,9 @@ import math
 import os
 import random
 import re
+import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -31,7 +33,8 @@ TOKEN = os.environ.get("GH_TOKEN", "")
 TZ_OFFSET = float(os.environ.get("TZ_OFFSET", "6"))
 OUT_DIR = os.environ.get("OUT_DIR", "assets")
 DISPLAY_NAME = os.environ.get("DISPLAY_NAME", "Abdul Julil Shahria")  # name shown on the card
-MAX_COMMIT_PAGES = 30  # per repo, 100 commits per page
+# Other commit emails that are yours (lowercase, comma-separated), e.g. a personal address set in git config.
+EXTRA_EMAILS = {e.strip().lower() for e in os.environ.get("EXTRA_EMAILS", "").split(",") if e.strip()}
 
 LANG_COLORS = {
     "Python": "#3b82f6",
@@ -125,30 +128,35 @@ def scrape_calendar(created_at):
     return days
 
 
-def fetch_commits(repos):
-    """Commit hours (local time) and commit counts per repo language."""
+def fetch_commits(repos, user_id):
+    """Commit hours (local time) and commit counts per repo language.
+
+    Reads each repo's full git history (all branches) instead of the commits API, because the API's
+    author filter misses commits made under a previous username. Commits are matched by the
+    numeric account id inside GitHub's noreply address ("<id>+<any username>@users.noreply.github.com"),
+    which stays the same when the username changes.
+    """
     hours = Counter()
     by_lang = Counter()
-    for repo in repos:
-        for page in range(1, MAX_COMMIT_PAGES + 1):
-            url = (f"https://api.github.com/repos/{repo['full_name']}/commits"
-                   f"?author={USER}&per_page=100&page={page}")
-            try:
-                commits = api(url)
-            except urllib.error.HTTPError as err:
-                if err.code in (409, 404):  # empty or unavailable repo
-                    break
-                raise
-            if not commits:
-                break
-            for c in commits:
-                stamp = c["commit"]["author"]["date"].replace("Z", "+00:00")
-                local = dt.datetime.fromisoformat(stamp) + dt.timedelta(hours=TZ_OFFSET)
+    marker = f"{user_id}+"
+    with tempfile.TemporaryDirectory() as tmp:
+        for repo in repos:
+            dest = os.path.join(tmp, repo["name"] + ".git")
+            clone = subprocess.run(
+                ["git", "clone", "-q", "--bare", "--filter=blob:none", repo["clone_url"], dest],
+                capture_output=True, text=True)
+            if clone.returncode != 0:
+                continue
+            log = subprocess.run(["git", "-C", dest, "log", "--all", "--format=%ae|%at"],
+                                 capture_output=True, text=True).stdout
+            for line in log.splitlines():
+                email, _, stamp = line.rpartition("|")
+                if not (email.startswith(marker) or email.lower() in EXTRA_EMAILS):
+                    continue
+                local = dt.datetime.fromtimestamp(int(stamp), dt.timezone.utc) + dt.timedelta(hours=TZ_OFFSET)
                 hours[local.hour] += 1
                 if repo.get("language"):
                     by_lang[repo["language"]] += 1
-            if len(commits) < 100:
-                break
     return [hours.get(h, 0) for h in range(24)], by_lang
 
 
@@ -159,7 +167,7 @@ def collect_live():
     own = [r for r in repos if not r["fork"]]
     # The public profile graph is the source of truth: it matches the totals on github.com exactly.
     days = scrape_calendar(created)
-    hours, commit_langs = fetch_commits(own)
+    hours, commit_langs = fetch_commits(own, profile["id"])
     repo_langs = Counter(r["language"] for r in own if r["language"])
     return {
         "name": DISPLAY_NAME or profile.get("name") or USER,
