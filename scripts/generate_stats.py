@@ -566,6 +566,9 @@ def activity_svg(act):
     for i, (name, count) in enumerate(top):
         y = 140 + i * 40
         owner, _, repo = name.partition("/")
+        room = 30 - len(owner)  # keep long names clear of the count on the right
+        if len(repo) > room:
+            repo = repo[:room - 1] + "…"
         bar = 190 * count / peak
         rows.append(
             f'<g class="fadein" style="animation-delay:{0.15 + i * 0.1:.2f}s">'
