@@ -6,8 +6,6 @@
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=A78BFA&center=true&vCenter=true&width=600&lines=Computer+Science+Student;Web+Developer+(MERN+Stack);AI+Enthusiast" alt="Typing intro" />
 </a>
 
-📍 Sylhet, Bangladesh
-
 </div>
 
 ## About me
@@ -16,7 +14,12 @@
 - 💻 I build full-stack web apps with the MERN stack (MongoDB, Express, React, Node.js)
 - 📊 I work with data in Python using NumPy and pandas
 - 🤖 I'm interested in AI and machine learning
-- 🛠️ Recent projects: [Quick-Dine](https://github.com/ajshahria/Quick-Dine-), [MediQueue](https://github.com/ajshahria/MediQueue-Tutor-Booking-System), [SkillSwap](https://github.com/ajshahria/SkillSwap), [Compiler Construction](https://github.com/ajshahria/Compiler_Construction)
+- 🤝 Open to internships and collaboration on web or data projects
+
+<p align="center">
+  <a href="mailto:ajs.shahria@gmail.com"><img src="https://img.shields.io/badge/Gmail-ajs.shahria%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" /></a>
+  <a href="https://www.linkedin.com/in/abdul-julil-shahria/"><img src="https://img.shields.io/badge/LinkedIn-Abdul%20Julil%20Shahria-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+</p>
 
 ## Tech stack
 
@@ -48,13 +51,6 @@
 
 <p align="center">
   <img src="./assets/github-snake.svg" alt="Snake eating my contribution graph" width="100%" />
-</p>
-
-## Contact
-
-<p align="center">
-  <a href="mailto:ajs.shahria@gmail.com"><img src="https://img.shields.io/badge/Gmail-ajs.shahria%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" /></a>
-  <a href="https://www.linkedin.com/in/abdul-julil-shahria/"><img src="https://img.shields.io/badge/LinkedIn-Abdul%20Julil%20Shahria-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
 </p>
 
 <p align="center"><sub>Stats refresh every day via GitHub Actions.</sub></p>
