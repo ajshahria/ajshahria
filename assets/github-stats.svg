@@ -58,7 +58,7 @@
 <g class="fadein">
   <rect x="40" y="100" width="250" height="150" rx="16" class="tile"/>
   <text x="64" y="134" class="muted">Total contributions</text>
-  <text x="64" y="206" class="big">499</text>
+  <text x="64" y="206" class="big">500</text>
   <text x="64" y="232" class="accent">Jan 15, 2024 to present</text>
 
   <rect x="306" y="100" width="388" height="150" rx="16" class="tile-hl"/>
