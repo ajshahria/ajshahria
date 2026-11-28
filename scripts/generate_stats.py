@@ -128,13 +128,28 @@ def scrape_calendar(created_at):
     return days
 
 
+EXT_LANG = {
+    "js": "JavaScript", "jsx": "JavaScript", "mjs": "JavaScript", "cjs": "JavaScript",
+    "ts": "TypeScript", "tsx": "TypeScript",
+    "py": "Python", "ipynb": "Jupyter Notebook",
+    "java": "Java", "cpp": "C++", "cc": "C++", "cxx": "C++", "hpp": "C++", "c": "C",
+    "html": "HTML", "htm": "HTML", "css": "CSS", "scss": "CSS",
+    "php": "PHP", "go": "Go", "rs": "Rust", "kt": "Kotlin", "cs": "C#", "sql": "SQL",
+    "sh": "Shell", "asm": "Assembly", "y": "Yacc", "l": "Lex",
+}
+SKIP_PATH = re.compile(r"(^|/)(node_modules|dist|build|vendor|\.next|coverage)/|\.min\.(js|css)$")
+
+
 def fetch_commits(repos, user_id):
-    """Commit hours (local time) and commit counts per repo language.
+    """Commit hours (local time) and commits per language.
 
     Reads each repo's full git history (all branches) instead of the commits API, because the API's
     author filter misses commits made under a previous username. Commits are matched by the
     numeric account id inside GitHub's noreply address ("<id>+<any username>@users.noreply.github.com"),
-    which stays the same when the username changes.
+    which stays the same when the username changes. Merge commits are skipped.
+
+    Languages come from the files each commit changed, not the repo's main language: a commit that
+    edits one .jsx and one .css file counts half to JavaScript and half to CSS.
     """
     hours = Counter()
     by_lang = Counter()
@@ -147,16 +162,33 @@ def fetch_commits(repos, user_id):
                 capture_output=True, text=True)
             if clone.returncode != 0:
                 continue
-            log = subprocess.run(["git", "-C", dest, "log", "--all", "--format=%ae|%at"],
-                                 capture_output=True, text=True).stdout
+            log = subprocess.run(
+                ["git", "-C", dest, "log", "--all", "--no-merges", "--format=@%ae|%at", "--name-only"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
+            commits, current = [], None
             for line in log.splitlines():
-                email, _, stamp = line.rpartition("|")
-                if not (email.startswith(marker) or email.lower() in EXTRA_EMAILS):
-                    continue
-                local = dt.datetime.fromtimestamp(int(stamp), dt.timezone.utc) + dt.timedelta(hours=TZ_OFFSET)
+                if line.startswith("@"):
+                    email, _, stamp = line[1:].rpartition("|")
+                    mine = email.startswith(marker) or email.lower() in EXTRA_EMAILS
+                    current = {"at": int(stamp), "files": []} if mine else None
+                    if current:
+                        commits.append(current)
+                elif line and current is not None:
+                    current["files"].append(line)
+            for c in commits:
+                local = dt.datetime.fromtimestamp(c["at"], dt.timezone.utc) + dt.timedelta(hours=TZ_OFFSET)
                 hours[local.hour] += 1
-                if repo.get("language"):
-                    by_lang[repo["language"]] += 1
+                langs = set()
+                for path in c["files"]:
+                    if SKIP_PATH.search(path):
+                        continue
+                    ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
+                    if ext == "h":  # header: C in a C repo, otherwise C++
+                        langs.add("C" if repo.get("language") == "C" else "C++")
+                    elif ext in EXT_LANG:
+                        langs.add(EXT_LANG[ext])
+                for lang in langs:
+                    by_lang[lang] += 1 / len(langs)
     return [hours.get(h, 0) for h in range(24)], by_lang
 
 
@@ -164,10 +196,13 @@ def collect_live():
     profile = api(f"https://api.github.com/users/{USER}")
     created = dt.datetime.fromisoformat(profile["created_at"].replace("Z", "+00:00"))
     repos = api(f"https://api.github.com/users/{USER}/repos?type=owner&per_page=100")
+    # This profile repo only holds the README and this script, so it is left out of every chart.
+    repos = [r for r in repos if r["name"].lower() != USER.lower()]
     own = [r for r in repos if not r["fork"]]
     # The public profile graph is the source of truth: it matches the totals on github.com exactly.
     days = scrape_calendar(created)
-    hours, commit_langs = fetch_commits(own, profile["id"])
+    # Forks are included for commits: your own commits there (e.g. course lab repos) are real work.
+    hours, commit_langs = fetch_commits(repos, profile["id"])
     repo_langs = Counter(r["language"] for r in own if r["language"])
     return {
         "name": DISPLAY_NAME or profile.get("name") or USER,
